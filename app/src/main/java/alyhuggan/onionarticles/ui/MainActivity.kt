@@ -17,6 +17,5 @@ class MainActivity : AppCompatActivity() {
 
     private fun initiateNavController() {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        navController.navigate(R.id.home)
     }
 }
