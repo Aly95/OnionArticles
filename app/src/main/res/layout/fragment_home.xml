@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
+<layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
@@ -16,45 +16,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        bind:layout_constraintBottom_toTopOf="@+id/article_RV"
-        bind:layout_constraintEnd_toEndOf="parent"
-        bind:layout_constraintHeight_percent="0.5"
-        bind:layout_constraintStart_toStartOf="parent"
-        bind:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/article_Enter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewmodel.articleEditText}"
-            />
-
-        <Button
-            android:id="@+id/article_Btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Add Article Headline"
-            android:onClick="@{() -> viewmodel.insert()}"/>
-    </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/article_RV"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        bind:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/colorPrimaryLight"
         bind:layout_constraintEnd_toEndOf="parent"
-        bind:layout_constraintHeight_percent="0.5"
+        bind:layout_constraintHeight_percent="0.6"
         bind:layout_constraintStart_toStartOf="parent"
-        />
+        bind:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        bind:cardBackgroundColor="@color/colorPrimaryDark"
+        bind:cardCornerRadius="4dp"
+        bind:cardElevation="8dp"
+        bind:layout_constraintBottom_toBottomOf="parent"
+        bind:layout_constraintTop_toBottomOf="@+id/article_RV">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            bind:layout_constraintHeight_percent="0.25">
+
+            <EditText
+                android:id="@+id/article_Enter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@={viewmodel.articleEditText}"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/article_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:onClick="@{() -> viewmodel.insert()}"
+                android:text="Add Article Headline" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

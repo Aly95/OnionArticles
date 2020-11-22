@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class ArticlesViewHolder(view: View): RecyclerView.ViewHolder(view) {
-    val id = view.findViewById<TextView>(R.id.article_Id)
     val title = view.findViewById<TextView>(R.id.article_Title)
 }
 
@@ -25,13 +24,8 @@ class ArticleAdapter(): RecyclerView.Adapter<ArticlesViewHolder>() {
     override fun getItemCount() = articles.size
 
     override fun onBindViewHolder(holder: ArticlesViewHolder, position: Int) {
-
         val article = articles[position]
-
-        val id = holder.id
         val title = holder.title
-
-        id.text = article.id.toString()
         title.text = article.title
     }
 
