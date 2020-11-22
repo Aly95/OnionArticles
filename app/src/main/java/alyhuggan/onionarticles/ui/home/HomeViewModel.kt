@@ -7,15 +7,19 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 private const val TAG = "HomeViewModel"
 
-class HomeViewModel (application: Application): AndroidViewModel(application) {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
+
+     var allArticles: LiveData<List<Article>>
 
     private val repository: ArticleRepository
-    lateinit var allArticles: LiveData<List<Article>>
+
+    val articleEditText = MutableLiveData<String>()
 
     init {
         val dao = ArticleDatabase.getDatabase(application).articleDao()
@@ -23,10 +27,24 @@ class HomeViewModel (application: Application): AndroidViewModel(application) {
         allArticles = repository.allArticles
     }
 
-    fun insert(article: Article) {
-        Log.d(TAG, "insert: started")
+    fun insertFakeData(article: Article) {
         viewModelScope.launch {
-            repository.insert(article)
+        repository.insert(article)
+        }
+    }
+
+    fun insert() {
+        Log.d(TAG, "insert: started")
+        if (articleEditText.value != null) {
+            val article = Article()
+            article.id = article.generateID()
+            article.title = articleEditText.value!!
+
+            viewModelScope.launch {
+                repository.insert(
+                    article
+                )
+            }
         }
     }
 

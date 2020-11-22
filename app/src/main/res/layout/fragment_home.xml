@@ -35,15 +35,16 @@
             android:layout_margin="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@{article.title}" />
+            android:text="@={viewmodel.articleEditText}"
+            />
 
         <Button
             android:id="@+id/article_Btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Button"
-            android:onClick="@{() -> viewmodel.insert(article)}"/>
+            android:text="Add Article Headline"
+            android:onClick="@{() -> viewmodel.insert()}"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

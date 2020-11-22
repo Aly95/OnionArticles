@@ -8,30 +8,30 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ArticleViewHolder(view: View): RecyclerView.ViewHolder(view) {
+class ArticlesViewHolder(view: View): RecyclerView.ViewHolder(view) {
     val id = view.findViewById<TextView>(R.id.article_Id)
     val title = view.findViewById<TextView>(R.id.article_Title)
 }
 
-class ArticleAdapter(): RecyclerView.Adapter<ArticleViewHolder>() {
+class ArticleAdapter(): RecyclerView.Adapter<ArticlesViewHolder>() {
 
     private var articles = emptyList<Article>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticlesViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_article_list, parent, false)
-        return ArticleViewHolder(view)
+        return ArticlesViewHolder(view)
     }
 
     override fun getItemCount() = articles.size
 
-    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ArticlesViewHolder, position: Int) {
 
         val article = articles[position]
 
         val id = holder.id
         val title = holder.title
 
-        id.text = article.toString()
+        id.text = article.id.toString()
         title.text = article.title
     }
 

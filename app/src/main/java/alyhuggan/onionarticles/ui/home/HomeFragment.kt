@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.Bindable
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 private const val TAG = "HomeFragment"
 
-class HomeFragment: Fragment(), View.OnClickListener {
+class HomeFragment: Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
@@ -41,38 +40,48 @@ class HomeFragment: Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         initializeViewModel()
         initializeRecyclerView()
+//        removeAllArticles()
+//        addDudArticles()
     }
 
-    fun addArticle() {
-        Log.d(TAG, "addArticle: started")
-        viewModel.insert(binding.article!!)
+    private fun addDudArticles() {
+        val articleA = Article()
+
+        val list = listOf<String>(
+            "What are you swamping in my do",
+            "Three wise men walked into a jar",
+            "Cross eyed man goes blind",
+            "Hamster saves care home")
+
+        list.forEach {
+            articleA.id = articleA.generateID()
+            articleA.title = it
+            viewModel.insertFakeData(articleA)
+        }
     }
 
-    fun initializeViewModel() {
-        Log.d(TAG, "initializeViewModel: started")
+    private fun removeAllArticles() = viewModel.deleteAll()
+
+    private fun initializeViewModel() {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         binding.viewmodel = viewModel
+
         viewModel.allArticles.observe(viewLifecycleOwner, Observer { articles ->
             if(articles.isNotEmpty() && articles != null) {
                 articles.let {
                     mAdapter.setArticles(it)
                 }
-                binding.article = Article(articles.size + 1, "SampleTitle")
             }
         })
 
     }
 
-    fun initializeRecyclerView() {
+    private fun initializeRecyclerView() {
         mAdapter = ArticleAdapter()
         binding.articleRV.let {
             it.adapter = mAdapter
             it.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
-    }
-
-    override fun onClick(p0: View?) {
-        addArticle()
     }
 
 }

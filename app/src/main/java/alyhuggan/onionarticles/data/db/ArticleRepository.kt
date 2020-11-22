@@ -2,8 +2,9 @@ package alyhuggan.onionarticles.data.db
 
 import alyhuggan.onionarticles.data.objects.Article
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
-class ArticleRepository(val articleDao: ArticleDao) {
+class ArticleRepository(private val articleDao: ArticleDao) {
 
     val allArticles: LiveData<List<Article>> = articleDao.getAllArticles()
 
@@ -22,4 +23,6 @@ class ArticleRepository(val articleDao: ArticleDao) {
     suspend fun deleteAll() {
         articleDao.deleteAll()
     }
+
+    suspend fun getRandomArticle() = articleDao.getRandomArticle()
 }

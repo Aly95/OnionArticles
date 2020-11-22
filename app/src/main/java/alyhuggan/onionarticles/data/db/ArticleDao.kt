@@ -22,4 +22,6 @@ interface ArticleDao {
     @Query("SELECT * FROM article_table ORDER BY id DESC")
     fun getAllArticles(): LiveData<List<Article>>
 
+    @Query("SELECT * FROM article_table order by RANDOM() LIMIT 1")
+    suspend fun getRandomArticle(): List<Article>
 }
