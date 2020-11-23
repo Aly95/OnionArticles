@@ -17,15 +17,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 private const val TAG = "HomeFragment"
 
-class HomeFragment: Fragment() {
+class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
-
-    private lateinit var recyclerView: RecyclerView
     private lateinit var mAdapter: ArticleAdapter
-
-    private var article = Article(1, "Title")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,34 +36,20 @@ class HomeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initializeViewModel()
         initializeRecyclerView()
-//        removeAllArticles()
-//        addDudArticles()
+        /*
+        Functions for development purposes
+
+        removeAllArticles()
+        addDudArticles()
+        */
     }
-
-    private fun addDudArticles() {
-        val articleA = Article()
-
-        val list = listOf<String>(
-            "What are you swamping in my do",
-            "Three wise men walked into a jar",
-            "Cross eyed man goes blind",
-            "Hamster saves care home")
-
-        list.forEach {
-            articleA.id = articleA.generateID()
-            articleA.title = it
-            viewModel.insertFakeData(articleA)
-        }
-    }
-
-    private fun removeAllArticles() = viewModel.deleteAll()
 
     private fun initializeViewModel() {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         binding.viewmodel = viewModel
 
         viewModel.allArticles.observe(viewLifecycleOwner, Observer { articles ->
-            if(articles.isNotEmpty() && articles != null) {
+            if (articles.isNotEmpty() && articles != null) {
                 articles.let {
                     mAdapter.setArticles(it)
                 }
@@ -80,8 +62,33 @@ class HomeFragment: Fragment() {
         mAdapter = ArticleAdapter()
         binding.articleRV.let {
             it.adapter = mAdapter
-            it.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            it.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }
+
+    /*
+    Used for adding initial data - TODO("Should not be in UI = move to repository")
+     */
+    private fun addDudArticles() {
+        val articleA = Article()
+
+        val list = listOf<String>(
+            "What are you swamping in my do",
+            "Three wise men walked into a jar",
+            "Cross eyed man goes blind",
+            "Hamster saves care home"
+        )
+
+        list.forEach {
+            articleA.title = it
+            viewModel.insertFakeData(articleA)
+        }
+    }
+
+    /*
+    Used for quickly removing all created articles
+     */
+    private fun removeAllArticles() = viewModel.deleteAll()
 
 }

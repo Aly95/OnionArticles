@@ -15,7 +15,7 @@ private const val TAG = "HomeViewModel"
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
-     var allArticles: LiveData<List<Article>>
+    var allArticles: LiveData<List<Article>>
 
     private val repository: ArticleRepository
 
@@ -29,20 +29,17 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun insertFakeData(article: Article) {
         viewModelScope.launch {
-        repository.insert(article)
+            repository.insert(article)
         }
     }
 
     fun insert() {
-        Log.d(TAG, "insert: started")
-        if (articleEditText.value != null) {
-            val article = Article()
-            article.id = article.generateID()
-            article.title = articleEditText.value!!
-
+        if (!articleEditText.value.isNullOrBlank()) {
             viewModelScope.launch {
                 repository.insert(
-                    article
+                    Article(
+                        articleEditText.value!!
+                    )
                 )
             }
         }
