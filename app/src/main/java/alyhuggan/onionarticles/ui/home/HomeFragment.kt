@@ -17,10 +17,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 private const val TAG = "HomeFragment"
 
+private lateinit var binding: FragmentHomeBinding
+
 class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
-    private lateinit var binding: FragmentHomeBinding
     private lateinit var mAdapter: ArticleAdapter
 
     override fun onCreateView(
@@ -28,20 +29,20 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_home, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initializeViewModel()
-        initializeRecyclerView()
-        /*
-        Functions for development purposes
-
-        removeAllArticles()
-        addDudArticles()
-        */
+        return if (::binding.isInitialized) {
+            binding.root
+        } else {
+            binding =
+                DataBindingUtil.inflate(layoutInflater, R.layout.fragment_home, container, false)
+            initializeViewModel()
+            initializeRecyclerView()
+            /*
+            Functions for development purposes
+                removeAllArticles()
+                addDudArticles()
+            */
+            return binding.root
+        }
     }
 
     private fun initializeViewModel() {
